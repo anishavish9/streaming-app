@@ -21,8 +21,7 @@ public class UserMovieServiceImpl implements UserMovieService{
 
     @Override
     public User registerUser(User user) throws UserAlreadyExistsException {
-        if(userMovieRepository.findById(user.getEmail()).isPresent())
-        {
+        if (userMovieRepository.findById(user.getEmail()).isPresent()) {
             throw new UserAlreadyExistsException();
         }
         return userMovieRepository.save(user);
@@ -30,14 +29,12 @@ public class UserMovieServiceImpl implements UserMovieService{
 
     @Override
     public User saveUserMovieToList(Movie movie, String email) throws UserNotFoundException {
-        if(userMovieRepository.findById(email).isEmpty())
-        {
+        if (userMovieRepository.findById(email).isEmpty()) {
 
             throw new UserNotFoundException();
         }
         User user = userMovieRepository.findByEmail(email);
-        if(user.getMovieList() == null)
-        {
+        if (user.getMovieList() == null) {
             System.out.println("In repo " + email);
             user.setMovieList(Arrays.asList(movie));
         }
@@ -52,15 +49,13 @@ public class UserMovieServiceImpl implements UserMovieService{
     @Override
     public User deleteUserMovieFromList(String email, String movieId) throws UserNotFoundException, MovieNotFoundException {
         boolean movieIdIsPresent = false;
-        if(userMovieRepository.findById(email).isEmpty())
-        {
+        if (userMovieRepository.findById(email).isEmpty()) {
             throw new UserNotFoundException();
         }
         User user = userMovieRepository.findById(email).get();
         List<Movie> movies = user.getMovieList();
         movieIdIsPresent = movies.removeIf(x->x.getMovieId().equals(movieId));
-        if(!movieIdIsPresent)
-        {
+        if (!movieIdIsPresent) {
             throw new MovieNotFoundException();
         }
         user.setMovieList(movies);
@@ -69,8 +64,7 @@ public class UserMovieServiceImpl implements UserMovieService{
 
     @Override
     public List<Movie> getAllUserMovies(String email) throws UserNotFoundException {
-        if(userMovieRepository.findById(email).isEmpty())
-        {
+        if (userMovieRepository.findById(email).isEmpty()) {
             throw new UserNotFoundException();
         }
         return userMovieRepository.findById(email).get().getMovieList();

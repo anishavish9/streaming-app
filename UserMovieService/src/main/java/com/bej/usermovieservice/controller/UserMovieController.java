@@ -32,8 +32,7 @@ public class UserMovieController {
         try {
             responseEntity =  new ResponseEntity<>(userMovieService.registerUser(user), HttpStatus.CREATED);
         }
-        catch(UserAlreadyExistsException e)
-        {
+        catch(UserAlreadyExistsException e) {
             throw new UserAlreadyExistsException();
         }
         return responseEntity;
@@ -41,8 +40,7 @@ public class UserMovieController {
 
     @PostMapping("/user/movie")
     public ResponseEntity<?> saveUserMovieToList(
-        @RequestBody Movie movie, HttpServletRequest request) throws UserNotFoundException 
-    {
+        @RequestBody Movie movie, HttpServletRequest request) throws UserNotFoundException {
         try {
             Claims claims = (Claims) request.getAttribute("claims");
             email = claims.getSubject();
@@ -52,8 +50,7 @@ public class UserMovieController {
 
             responseEntity = new ResponseEntity<>(userMovieService.saveUserMovieToList(movie, email), HttpStatus.CREATED);
         }
-        catch ( UserNotFoundException e)
-        {
+        catch ( UserNotFoundException e) {
             System.out.println(e);
             throw new UserNotFoundException();
         }
@@ -63,11 +60,11 @@ public class UserMovieController {
 
     @GetMapping("/user/movies")
     public ResponseEntity<?> getAllUserMoviesFromList() throws UserNotFoundException {
-        try{
+        try {
             System.out.println("email " + email);
             responseEntity = new ResponseEntity<>(userMovieService.getAllUserMovies(email), HttpStatus.OK);
-        }catch(UserNotFoundException e)
-        {
+        }
+        catch(UserNotFoundException e) {
             throw new UserNotFoundException();
         }
         return responseEntity;
@@ -75,13 +72,14 @@ public class UserMovieController {
 
     @DeleteMapping("/user/{movieId}")
     public ResponseEntity<?> deleteUserProductFromList(@PathVariable String movieId)
-            throws UserNotFoundException, MovieNotFoundException
+            throws UserNotFoundException, MovieNotFoundException 
     {
         System.out.println("Movie Id"+movieId);
         try {
             System.out.println("Movie Id"+movieId);
             responseEntity = new ResponseEntity<>(userMovieService.deleteUserMovieFromList(email, movieId), HttpStatus.OK);
-        } catch (UserNotFoundException | MovieNotFoundException m) {
+        }
+        catch (UserNotFoundException | MovieNotFoundException m) {
             throw new MovieNotFoundException();
         }
         return responseEntity;

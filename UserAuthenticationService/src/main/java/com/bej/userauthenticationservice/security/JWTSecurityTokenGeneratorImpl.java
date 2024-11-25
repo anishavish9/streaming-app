@@ -12,9 +12,8 @@ import java.util.Map;
 
 @Service
 public class JWTSecurityTokenGeneratorImpl implements SecurityTokenGenerator {
-
     public Map<String, String> generateToken(User user) {
-// multiple claims for a token - 3 types - registered, public, and private
+        // multiple claims for a token - 3 types - registered, public, and private
         String jwtToken = Jwts.builder().setIssuer("ShopZone")
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date())

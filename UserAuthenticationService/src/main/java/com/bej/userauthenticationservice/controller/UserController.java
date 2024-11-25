@@ -43,5 +43,4 @@ public class UserController {
         return new ResponseEntity<>(map,HttpStatus.OK);
     }
 
-
 }

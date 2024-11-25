@@ -14,13 +14,11 @@ public class UserMovieServiceApplication {
 	}
 
 	@Bean
-	public FilterRegistrationBean jwtFilter()
-	{
+	public FilterRegistrationBean jwtFilter() {
 		FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean();
 		filterRegistrationBean.setFilter(new JwtFilter());
 		filterRegistrationBean.addUrlPatterns("/api/v2/user/*");
 		return filterRegistrationBean;
-
 	}
 
 }
